@@ -279,73 +279,84 @@ async fn esegui_workflow(workflow_path: PathBuf, ripeti: u32, velocita: f32) -> 
     Ok(())
 }
 
-/// Automatizza workflow usando dati da Excel
-async fn automatizza_da_excel(
-    excel_path: PathBuf,
-    workflow_path: PathBuf,
-    colonna_inizio: String,
-    riga_inizio: u32,
-) -> Result<()> {
-    info!("📊 Automazione da Excel");
-    info!("   Excel: {:?}", excel_path);
-    info!("   Workflow: {:?}", workflow_path);
-    info!("");
-
-    // Apri Excel
-    let mut workbook: Xlsx<_> = open_workbook(&excel_path)
-        .context("Impossibile aprire il file Excel")?;
-    
-    // Prendi il primo foglio
-    let sheet_name = workbook.sheet_names()[0].clone();
-    let range = workbook.worksheet_range(&sheet_name)
-        .context("Impossibile leggere il foglio Excel")?;
-    
-    info!("✅ Excel aperto: {} righe trovate", range.height());
-    
-    // Carica workflow
-    let workflow_data = std::fs::read_to_string(&workflow_path)?;
-    let _workflow: serde_json::Value = serde_json::from_str(&workflow_data)?;
-    
-    info!("✅ Workflow caricato");
+/// Mostra informazioni su un workflow salvato
+async fn mostra_info_workflow(workflow_path: PathBuf) -> Result<()> {
+    info!("ℹ️  Informazioni workflow: {:?}", workflow_path);
     info!("");
     
-    // Processa ogni riga
-    let mut processed = 0;
-    for row_idx in (riga_inizio as usize)..range.height() {
-        let mut row_data = Vec::new();
-        
-        // Leggi tutte le colonne della riga
-        for col_idx in 0..range.width() {
-            if let Some(cell) = range.get((row_idx, col_idx)) {
-                row_data.push(cell.to_string());
-            }
-        }
-        
-        if row_data.is_empty() {
-            break; // Fine dei dati
-        }
-        
-        info!("📝 Riga {}: {:?}", row_idx + 1, row_data);
-        
-        // Qui eseguiresti il workflow con i dati della riga
-        // TODO: Implementa esecuzione workflow con sostituzione dati
-        /*
-        for event in workflow["events"] {
-            // Sostituisci placeholder con dati Excel
-            // Es: {{col_A}} -> row_data[0]
-            execute_event_with_data(event, &row_data);
-        }
-        */
-        
-        processed += 1;
-        
-        // Pausa tra le esecuzioni
-        tokio::time::sleep(tokio::time::Duration::from_secs(2)).await;
+    let workflow_data = std::fs::read_to_string(&workflow_path)
+        .context("Errore nella lettura del file workflow")?;
+    
+    #[derive(Deserialize)]
+    struct RecordedWorkflow {
+        name: String,
+        start_time: u64,
+        end_time: Option<u64>,
+        events: Vec<TimestampedEvent>,
     }
     
-    info!("");
-    info!("✅ Completato! {} righe processate", processed);
-    info!("⚠️  NOTA: Esecuzione automatica in sviluppo");
+    #[derive(Deserialize)]
+    struct TimestampedEvent {
+        timestamp: u64,
+        event: WorkflowEvent,
+    }
+    
+    let workflow: RecordedWorkflow = serde_json::from_str(&workflow_data)
+        .context("Errore nel parsing del workflow")?;
+    
+    println!("╔════════════════════════════════════════════════════════════════╗");
+    println!("║  INFORMAZIONI WORKFLOW                                         ║");
+    println!("╚════════════════════════════════════════════════════════════════╝");
+    println!();
+    println!("📝 Nome: {}", workflow.name);
+    println!("📊 Eventi totali: {}", workflow.events.len());
+    
+    if let Some(end_time) = workflow.end_time {
+        let duration_ms = end_time - workflow.start_time;
+        let duration_sec = duration_ms as f64 / 1000.0;
+        println!("⏱️  Durata: {:.2} secondi", duration_sec);
+    }
+    
+    println!();
+    println!("📋 Riepilogo azioni:");
+    
+    let mut click_count = 0;
+    let mut keyboard_count = 0;
+    let mut hotkey_count = 0;
+    let mut text_input_count = 0;
+    let mut app_switch_count = 0;
+    
+    for event in &workflow.events {
+        match &event.event {
+            WorkflowEvent::Mouse(m) if matches!(m.event_type, MouseEventType::Click | MouseEventType::Down) => {
+                click_count += 1;
+            }
+            WorkflowEvent::Keyboard(k) if k.is_key_down => {
+                keyboard_count += 1;
+            }
+            WorkflowEvent::Hotkey(_) => {
+                hotkey_count += 1;
+            }
+            WorkflowEvent::TextInputCompleted(_) => {
+                text_input_count += 1;
+            }
+            WorkflowEvent::ApplicationSwitch(_) => {
+                app_switch_count += 1;
+            }
+            _ => {}
+        }
+    }
+    
+    println!("   🖱️  Click mouse: {}", click_count);
+    println!("   ⌨️  Pressioni tastiera: {}", keyboard_count);
+    println!("   🔥 Hotkey (Ctrl+C, ecc.): {}", hotkey_count);
+    println!("   📝 Input testo: {}", text_input_count);
+    println!("   🔄 Cambi applicazione: {}", app_switch_count);
+    
+    println!();
+    println!("💡 Per eseguire questo workflow:");
+    println!("   workflow-automator.exe esegui --workflow {:?}", workflow_path);
+    println!();
     
     Ok(())
 }
