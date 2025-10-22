@@ -154,7 +154,14 @@ Utile per verificare che la registrazione sia andata bene!
 A: NO! Il file .exe funziona subito, senza dipendenze.
 
 ### **Q: Funziona con qualsiasi programma Windows?**
-A: Sì! Funziona con qualsiasi applicazione (gestionali, form web, Excel, ecc.)
+A: **SÌ!** Funziona con QUALSIASI cosa:
+- Gestionali aziendali
+- Siti web nei browser
+- Excel, Word, Outlook
+- Software personalizzati
+- Qualunque programma desktop
+
+Se puoi farlo manualmente, puoi automatizzarlo!
 
 ### **Q: Posso modificare un workflow registrato?**
 A: Non direttamente. Se vuoi cambiare, registra un nuovo workflow.
