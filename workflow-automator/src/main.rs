@@ -76,16 +76,11 @@ async fn main() -> Result<()> {
         Commands::Registra { nome } => {
             registra_workflow(nome).await?;
         }
-        Commands::Esegui { workflow } => {
-            esegui_workflow(workflow).await?;
+        Commands::Esegui { workflow, ripeti, velocita } => {
+            esegui_workflow(workflow, ripeti, velocita).await?;
         }
-        Commands::Excel {
-            excel,
-            workflow,
-            colonna_inizio,
-            riga_inizio,
-        } => {
-            automatizza_da_excel(excel, workflow, colonna_inizio, riga_inizio).await?;
+        Commands::Info { workflow } => {
+            mostra_info_workflow(workflow).await?;
         }
         Commands::Guida => {
             mostra_guida();
