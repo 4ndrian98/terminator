@@ -135,14 +135,16 @@ Utile per verificare che la registrazione sia andata bene!
 
 ---
 
-### Esempio 2: Inserimento Dati in Gestionale
+### Esempio 2: Aprire Programmi e Fare Report
 
-**Scenario:** Devi inserire 200 clienti da Excel nel gestionale aziendale.
+**Scenario:** Ogni mattina devi aprire 5 programmi, fare login, scaricare report.
 
 **Soluzione:**
-1. Registra: inserisci 1 cliente mentre registri
-2. Prepara Excel con i 200 clienti
-3. Esegui: il programma inserisce tutti i 200 clienti
+1. Registra: fai UNA volta tutta la sequenza
+2. Ogni mattina esegui il workflow
+3. Il computer fa tutto automaticamente mentre prendi il caffè!
+
+**Tempo risparmiato:** Da 15 minuti → 30 secondi!
 
 ---
 
