@@ -43,13 +43,21 @@ workflow-automator.exe registra --nome "mio_lavoro"
 ```
 
 **Cosa succede:**
-1. Il programma inizia a registrare
-2. **TU esegui manualmente** le azioni che vuoi automatizzare
-3. Esempio: apri un programma, compila i campi, premi OK
-4. Quando hai finito, premi **Ctrl+C**
-5. Il workflow viene salvato come `mio_lavoro.json`
+1. Il programma inizia a registrare **TUTTO** quello che fai:
+   - Ogni click del mouse
+   - Ogni tasto premuto
+   - Apertura di programmi
+   - Cambio finestre
+   - Copia/Incolla
+2. **TU esegui manualmente** le azioni da automatizzare
+3. Quando hai finito, premi **Ctrl+C**
+4. Il workflow viene salvato come `mio_lavoro.json`
 
-💡 **Consiglio:** Fai azioni semplici e chiare. Il programma copia esattamente quello che fai!
+💡 **Consigli per una buona registrazione:**
+- Fai azioni **LENTE** e chiare
+- Aspetta che i programmi si carichino completamente
+- Non fare movimenti mouse inutili
+- Il programma copia ESATTAMENTE quello che fai!
 
 ---
 
