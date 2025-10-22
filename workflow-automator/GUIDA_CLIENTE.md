@@ -124,12 +124,12 @@ Utile per verificare che la registrazione sia andata bene!
 
 ### Esempio 1: Compilare Form Ripetitivo
 
-**Scenario:** Devi compilare un form aziendale 50 volte con dati diversi.
+**Scenario:** Devi compilare un form aziendale 50 volte.
 
 **Soluzione:**
-1. Registra: compili il form UNA volta mentre registri
-2. Prepara Excel con i 50 dati
-3. Esegui con Excel: il programma compila tutto automaticamente
+1. Registra: compili il form UNA volta manualmente mentre registri
+2. Esegui: `workflow-automator.exe esegui -w form.json --ripeti 50`
+3. Il programma compila automaticamente tutte le 50 volte!
 
 **Tempo risparmiato:** Da 2 ore → 5 minuti!
 
