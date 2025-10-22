@@ -1,0 +1,11 @@
+Nome,Cognome,Email,Telefono,Azienda,Note
+Mario,Rossi,mario.rossi@email.it,+39 123 456789,Acme SRL,Cliente VIP
+Luigi,Verdi,luigi.verdi@email.it,+39 234 567890,Beta SpA,Nuovo cliente
+Anna,Bianchi,anna.bianchi@email.it,+39 345 678901,Gamma SRL,Urgente
+Paolo,Neri,paolo.neri@email.it,+39 456 789012,Delta SNC,Standard
+Giulia,Gialli,giulia.gialli@email.it,+39 567 890123,Epsilon SRL,Da ricontattare
+Marco,Blu,marco.blu@email.it,+39 678 901234,Zeta SpA,Cliente premium
+Sara,Rosa,sara.rosa@email.it,+39 789 012345,Eta SRL,Follow-up necessario
+Andrea,Viola,andrea.viola@email.it,+39 890 123456,Theta SNC,Nuovo contratto
+Francesca,Arancio,francesca.arancio@email.it,+39 901 234567,Iota SRL,Da confermare
+Roberto,Marrone,roberto.marrone@email.it,+39 012 345678,Kappa SpA,Cliente storico
