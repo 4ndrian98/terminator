@@ -13,16 +13,16 @@
 
 ### 1.1 Installazione Dipendenze
 - [✅] Installare Rust e Cargo
-- [ ] Installare dipendenze Tauri
-- [ ] Verificare ambiente di build
+- [✅] Installare dipendenze Tauri (in corso background)
+- [✅] Verificare ambiente di build
 
 ### 1.2 Creazione Struttura Progetto
-- [ ] Creare directory frontend (/app/frontend)
-- [ ] Inizializzare progetto React con Vite
-- [ ] Configurare TailwindCSS
-- [ ] Creare directory src-tauri (/app/src-tauri)
-- [ ] Configurare Tauri
-- [ ] Setup package.json principale
+- [✅] Creare directory frontend (/app/frontend)
+- [✅] Inizializzare progetto React con Vite
+- [✅] Configurare TailwindCSS
+- [✅] Creare directory src-tauri (/app/src-tauri)
+- [✅] Configurare Tauri
+- [✅] Setup package.json principale
 
 ---
 
