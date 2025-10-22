@@ -103,29 +103,20 @@ Esegue al doppio della velocità!
 
 ---
 
-### STEP 3: Automatizza con Excel (POTENTE!)
+### STEP 3: Vedi Informazioni su un Workflow
 
-Hai 100 righe di dati in Excel da inserire? Facile!
+Prima di eseguire, puoi vedere cosa contiene:
 
-**Prepara Excel:**
-```
-     A          B         C
-1    Nome       Email     Telefono
-2    Mario      m@x.it    123456
-3    Luigi      l@x.it    789012
-...  (altre 98 righe)
-```
-
-**Esegui:**
 ```cmd
-workflow-automator.exe excel --excel dati.xlsx --workflow mio_lavoro.json
+workflow-automator.exe info --workflow mio_lavoro.json
 ```
 
-Il programma:
-1. Legge la prima riga di Excel
-2. Esegue il workflow usando quei dati
-3. Passa alla riga successiva
-4. Ripete per TUTTE le righe automaticamente!
+Mostra:
+- Quante azioni sono registrate
+- Durata del workflow
+- Numero di click, digitazioni, ecc.
+
+Utile per verificare che la registrazione sia andata bene!
 
 ---
 
