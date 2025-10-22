@@ -29,22 +29,22 @@
 ## 📋 FASE 2: Backend Tauri (Rust)
 
 ### 2.1 Setup Base Tauri
-- [ ] Creare main.rs con Tauri boilerplate
-- [ ] Configurare tauri.conf.json
-- [ ] Setup Cargo.toml con dipendenze
+- [✅] Creare main.rs con Tauri boilerplate
+- [✅] Configurare tauri.conf.json
+- [✅] Setup Cargo.toml con dipendenze
 
 ### 2.2 Integrazione Workflow Recorder
-- [ ] Importare terminator-workflow-recorder nel progetto Tauri
-- [ ] Creare modulo recorder.rs
-- [ ] Implementare Tauri command: `start_recording()`
-- [ ] Implementare Tauri command: `stop_recording()`
-- [ ] Implementare Tauri command: `save_workflow()`
+- [✅] Importare terminator-workflow-recorder nel progetto Tauri
+- [✅] Creare state management per recorder
+- [✅] Implementare Tauri command: `start_recording()`
+- [✅] Implementare Tauri command: `stop_recording()`
+- [✅] Implementare Tauri command: `save_workflow()`
 
 ### 2.3 Gestione Workflow
-- [ ] Implementare Tauri command: `list_workflows()`
-- [ ] Implementare Tauri command: `get_workflow_info()`
-- [ ] Implementare Tauri command: `execute_workflow()`
-- [ ] Implementare Tauri command: `delete_workflow()`
+- [✅] Implementare Tauri command: `list_workflows()`
+- [✅] Implementare Tauri command: `get_workflow_info()`
+- [✅] Implementare Tauri command: `execute_workflow()`
+- [✅] Implementare Tauri command: `delete_workflow()`
 
 ### 2.4 Sistema di Eventi
 - [ ] Implementare event emitter per stato registrazione
