@@ -1,22 +1,23 @@
 use anyhow::{Context, Result};
-use calamine::{open_workbook, Reader, Xlsx};
 use clap::{Parser, Subcommand};
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
-use terminator_workflow_recorder::{WorkflowRecorder, WorkflowRecorderConfig};
+use terminator_workflow_recorder::{
+    WorkflowRecorder, WorkflowRecorderConfig, WorkflowEvent,
+    MouseEventType, MouseButton
+};
 use tokio::signal::ctrl_c;
-use tracing::{info, error};
+use tracing::{info, error, warn};
+use std::time::Duration;
 
 /// Automazione Workflow - Applicazione Standalone per Clienti
 /// 
-/// Permette di:
-/// 1. Registrare workflow ripetitivi
-/// 2. Eseguire workflow salvati
-/// 3. Automatizzare da Excel: legge dati da Excel e ripete il workflow
+/// REGISTRA qualsiasi cosa fai sul computer
+/// ESEGUI esattamente quello che hai registrato
 #[derive(Parser)]
 #[command(name = "Workflow Automator")]
 #[command(version = "1.0")]
-#[command(about = "Automatizza workflow ripetitivi - Facile da usare!", long_about = None)]
+#[command(about = "Automatizza QUALSIASI workflow - Facile da usare!", long_about = None)]
 struct Cli {
     #[command(subcommand)]
     command: Commands,
@@ -31,30 +32,26 @@ enum Commands {
         nome: String,
     },
     
-    /// Esegui un workflow salvato (una volta)
+    /// Esegui un workflow salvato
     Esegui {
         /// File del workflow da eseguire (.json)
         #[arg(short, long)]
         workflow: PathBuf,
+        
+        /// Quante volte ripetere (default: 1)
+        #[arg(short, long, default_value = "1")]
+        ripeti: u32,
+        
+        /// Velocità esecuzione: 1.0 = normale, 0.5 = metà velocità, 2.0 = doppia
+        #[arg(long, default_value = "1.0")]
+        velocita: f32,
     },
     
-    /// Automatizza da Excel: ripete il workflow per ogni riga
-    Excel {
-        /// File Excel con i dati (.xlsx)
-        #[arg(short, long)]
-        excel: PathBuf,
-        
-        /// File del workflow da ripetere (.json)
+    /// Mostra informazioni su un workflow salvato
+    Info {
+        /// File del workflow
         #[arg(short, long)]
         workflow: PathBuf,
-        
-        /// Colonna da cui iniziare (default: A)
-        #[arg(long, default_value = "A")]
-        colonna_inizio: String,
-        
-        /// Riga da cui iniziare (default: 2, salta intestazione)
-        #[arg(long, default_value = "2")]
-        riga_inizio: u32,
     },
     
     /// Guida rapida per iniziare
