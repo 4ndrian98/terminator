@@ -105,19 +105,19 @@
 ## 📋 FASE 4: Integrazione Frontend-Backend
 
 ### 4.1 Tauri Invoke Setup
-- [ ] Creare servizio API per chiamate Tauri
-- [ ] Implementare error handling
-- [ ] Implementare loading states
+- [✅] Creare servizio API per chiamate Tauri (tauriApi.js)
+- [✅] Implementare error handling
+- [✅] Implementare loading states
 
 ### 4.2 State Management
-- [ ] Context per workflow list
-- [ ] Context per recording state
-- [ ] Context per execution state
+- [✅] Context per workflow list
+- [✅] Context per recording state
+- [✅] Context per execution state
 
 ### 4.3 Event Listeners
-- [ ] Listener per eventi registrazione
-- [ ] Listener per eventi esecuzione
-- [ ] Listener per errori
+- [ ] Listener per eventi registrazione (OPZIONALE)
+- [ ] Listener per eventi esecuzione (OPZIONALE)
+- [ ] Listener per errori (OPZIONALE)
 
 ---
 
