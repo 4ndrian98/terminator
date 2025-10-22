@@ -366,61 +366,121 @@ fn mostra_guida() {
     println!(r#"
 ╔════════════════════════════════════════════════════════════════╗
 ║                    WORKFLOW AUTOMATOR                          ║
-║              Guida Rapida per Automatizzare Workflow           ║
+║         Automatizza QUALSIASI cosa fai sul computer!           ║
 ╚════════════════════════════════════════════════════════════════╝
 
-📚 COME FUNZIONA:
+📚 CONCETTO BASE:
 
-1️⃣  REGISTRA il tuo workflow (una volta sola):
-   
-   workflow-automator.exe registra --nome "compila_form"
-   
-   Poi esegui manualmente le azioni che vuoi automatizzare.
-   Premi Ctrl+C quando hai finito.
+   1. REGISTRA quello che fai manualmente
+   2. RIESEGUI automaticamente quando vuoi
 
-2️⃣  ESEGUI il workflow quando vuoi:
-   
-   workflow-automator.exe esegui --workflow compila_form.json
-
-3️⃣  AUTOMATIZZA con Excel (ripete per ogni riga):
-   
-   workflow-automator.exe excel \
-     --excel dati.xlsx \
-     --workflow compila_form.json
+   È come un "registratore macro" universale per Windows!
 
 ───────────────────────────────────────────────────────────────
 
-💡 ESEMPIO PRATICO:
+🎬 PASSO 1: REGISTRA
 
-Devi compilare un form 100 volte con dati da Excel?
+workflow-automator.exe registra --nome "mio_lavoro"
 
-1. Registra: compili il form UNA VOLTA mentre registri
-2. Prepara Excel con i 100 dati (una riga per ogni compilazione)
-3. Esegui: il programma ripete il workflow per tutte le 100 righe
+Cosa succede:
+• Il programma inizia a registrare TUTTO quello che fai
+• Apri programmi, clicca pulsanti, digita testo, ecc.
+• Quando hai finito, premi Ctrl+C
+• Viene salvato un file "mio_lavoro.json"
+
+💡 Esempi di cosa puoi registrare:
+   - Aprire Excel, copiare dati, incollarli in un gestionale
+   - Compilare un form web 
+   - Aprire Outlook, creare email, allegare file
+   - Qualsiasi sequenza di azioni ripetitive!
 
 ───────────────────────────────────────────────────────────────
 
-📋 FORMATO EXCEL:
+▶️  PASSO 2: ESEGUI
 
-Il file Excel deve avere:
-- Prima riga: intestazioni (opzionale)
-- Righe successive: i dati da usare
+workflow-automator.exe esegui --workflow mio_lavoro.json
 
-Esempio:
-  A          B         C
-  Nome       Email     Telefono
-  Mario      m@.it     123456
-  Luigi      l@.it     789012
+Il programma ripete ESATTAMENTE quello che hai registrato!
 
-Il programma userà questi dati per compilare i campi.
+Opzioni avanzate:
+
+• Ripeti più volte:
+  workflow-automator.exe esegui -w mio_lavoro.json --ripeti 10
+
+• Rallenta (se va troppo veloce):
+  workflow-automator.exe esegui -w mio_lavoro.json --velocita 0.5
+
+• Accelera (se vuoi più veloce):
+  workflow-automator.exe esegui -w mio_lavoro.json --velocita 2.0
+
+───────────────────────────────────────────────────────────────
+
+ℹ️  INFORMAZIONI SU UN WORKFLOW
+
+workflow-automator.exe info --workflow mio_lavoro.json
+
+Mostra:
+• Quante azioni sono registrate
+• Durata del workflow
+• Numero di click, digitazioni, ecc.
+
+───────────────────────────────────────────────────────────────
+
+💼 CASI D'USO REALI:
+
+1. COMPILAZIONE FORM RIPETITIVA
+   Registra: compili 1 form manualmente
+   Esegui: ripete 100 volte
+
+2. DATA ENTRY
+   Registra: inserisci 1 record nel gestionale
+   Esegui: inserisce automaticamente tutti i record
+
+3. PROCESSO MULTI-STEP
+   Registra: apri email → scarica allegato → processa → invia
+   Esegui: ripete per tutte le email
+
+4. TESTING SOFTWARE
+   Registra: sequenza di test manuali
+   Esegui: testa automaticamente dopo ogni modifica
+
+───────────────────────────────────────────────────────────────
+
+⚡ CONSIGLI IMPORTANTI:
+
+✅ Fai azioni LENTE e CHIARE durante la registrazione
+✅ Aspetta che i programmi si carichino
+✅ Testa il workflow con 1-2 esecuzioni prima di ripetere molte volte
+✅ Salva i file .json in sicurezza (sono preziosi!)
+
+❌ Non registrare azioni casuali o troppo veloci
+❌ Non cambiare posizione finestre tra registrazione ed esecuzione
+
+───────────────────────────────────────────────────────────────
+
+📝 COMANDI RAPIDI:
+
+# Registra
+workflow-automator.exe registra --nome "nome"
+
+# Esegui
+workflow-automator.exe esegui --workflow nome.json
+
+# Esegui 10 volte
+workflow-automator.exe esegui -w nome.json --ripeti 10
+
+# Info
+workflow-automator.exe info --workflow nome.json
+
+# Questa guida
+workflow-automator.exe guida
 
 ───────────────────────────────────────────────────────────────
 
 ❓ SERVE AIUTO?
 
-Per ulteriori informazioni:
-- Email: supporto@esempio.com
-- Docs: https://docs.esempio.com
+Email: supporto@esempio.com
+Web: https://docs.esempio.com
 
 "#);
 }
