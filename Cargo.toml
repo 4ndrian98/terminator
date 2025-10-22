@@ -8,6 +8,7 @@ members = [
     "terminator-mcp-agent",
     "terminator-workflow-recorder",
 ]
+exclude = ["src-tauri"]
 
 
 # Shared metadata for workspace members
