@@ -130,38 +130,151 @@ async fn registra_workflow(nome: String) -> Result<()> {
 }
 
 /// Esegui un workflow salvato
-async fn esegui_workflow(workflow_path: PathBuf) -> Result<()> {
+async fn esegui_workflow(workflow_path: PathBuf, ripeti: u32, velocita: f32) -> Result<()> {
     info!("▶️  Esecuzione workflow: {:?}", workflow_path);
+    info!("   Ripetizioni: {}", ripeti);
+    info!("   Velocità: {}x", velocita);
+    info!("");
     
     // Carica il workflow
     let workflow_data = std::fs::read_to_string(&workflow_path)
         .context("Errore nella lettura del file workflow")?;
     
-    let workflow: serde_json::Value = serde_json::from_str(&workflow_data)
+    #[derive(Deserialize)]
+    struct RecordedWorkflow {
+        name: String,
+        start_time: u64,
+        end_time: Option<u64>,
+        events: Vec<TimestampedEvent>,
+    }
+    
+    #[derive(Deserialize)]
+    struct TimestampedEvent {
+        timestamp: u64,
+        event: WorkflowEvent,
+    }
+    
+    let workflow: RecordedWorkflow = serde_json::from_str(&workflow_data)
         .context("Errore nel parsing del workflow")?;
     
-    info!("✅ Workflow caricato");
+    info!("✅ Workflow caricato: {}", workflow.name);
+    info!("   Eventi totali: {}", workflow.events.len());
     
-    // Qui implementeresti la logica di esecuzione usando terminator
-    // Per ora mostriamo cosa dovrebbe fare
+    if workflow.events.is_empty() {
+        warn!("⚠️  Il workflow non contiene eventi da eseguire");
+        return Ok(());
+    }
     
     info!("");
-    info!("🚀 Esecuzione degli step del workflow...");
+    info!("⏱️  Attendere 3 secondi prima di iniziare...");
+    info!("   (Posiziona le finestre se necessario)");
+    tokio::time::sleep(Duration::from_secs(3)).await;
     
-    // TODO: Implementa esecuzione usando terminator APIs
-    // Esempio concettuale:
-    /*
-    for event in workflow["events"].as_array() {
-        match event["type"] {
-            "click" => desktop.locator(selector).click(),
-            "type" => desktop.locator(selector).type(text),
-            ...
+    // Esegui il workflow per il numero di ripetizioni richieste
+    for iteration in 1..=ripeti {
+        if ripeti > 1 {
+            info!("");
+            info!("🔄 Ripetizione {}/{}", iteration, ripeti);
+        }
+        
+        info!("🚀 Esecuzione in corso...");
+        
+        // Calcola i timing relativi
+        let start_time = workflow.events[0].timestamp;
+        let mut previous_time = start_time;
+        
+        for (idx, timestamped_event) in workflow.events.iter().enumerate() {
+            // Calcola il delay rispetto all'evento precedente
+            let delay_ms = timestamped_event.timestamp.saturating_sub(previous_time);
+            previous_time = timestamped_event.timestamp;
+            
+            // Applica la velocità al delay
+            let adjusted_delay = Duration::from_millis(
+                ((delay_ms as f32) / velocita) as u64
+            );
+            
+            if adjusted_delay.as_millis() > 10 {
+                tokio::time::sleep(adjusted_delay).await;
+            }
+            
+            // Esegui l'evento
+            match &timestamped_event.event {
+                WorkflowEvent::Mouse(mouse_event) => {
+                    match mouse_event.event_type {
+                        MouseEventType::Click | MouseEventType::Down => {
+                            info!("🖱️  [{}/{}] Click at ({}, {})", 
+                                idx + 1, workflow.events.len(),
+                                mouse_event.position.x, mouse_event.position.y);
+                            
+                            // TODO: Esegui click reale usando terminator
+                            // desktop.mouse_move(x, y)?;
+                            // desktop.mouse_click(button)?;
+                        }
+                        _ => {}
+                    }
+                }
+                WorkflowEvent::Keyboard(kb_event) => {
+                    if kb_event.is_key_down {
+                        if let Some(ch) = kb_event.character {
+                            info!("⌨️  [{}/{}] Digitazione: '{}'", 
+                                idx + 1, workflow.events.len(), ch);
+                            
+                            // TODO: Esegui digitazione reale
+                            // desktop.type_text(&ch.to_string())?;
+                        }
+                    }
+                }
+                WorkflowEvent::Hotkey(hotkey) => {
+                    info!("🔥 [{}/{}] Hotkey: {}", 
+                        idx + 1, workflow.events.len(), 
+                        hotkey.combination);
+                    
+                    // TODO: Esegui hotkey reale
+                    // desktop.press_keys(&hotkey.combination)?;
+                }
+                WorkflowEvent::TextInputCompleted(text_input) => {
+                    info!("📝 [{}/{}] Testo completato: \"{}\"", 
+                        idx + 1, workflow.events.len(),
+                        text_input.text_value);
+                    
+                    // TODO: Esegui input testo
+                }
+                WorkflowEvent::Click(click_event) => {
+                    info!("🔘 [{}/{}] Button Click: \"{}\"", 
+                        idx + 1, workflow.events.len(),
+                        click_event.element_text);
+                    
+                    // TODO: Esegui click su elemento UI
+                }
+                WorkflowEvent::ApplicationSwitch(app_switch) => {
+                    info!("🔄 [{}/{}] Switch app: {} → {}", 
+                        idx + 1, workflow.events.len(),
+                        app_switch.from_application.as_deref().unwrap_or("?"),
+                        app_switch.to_application);
+                    
+                    // TODO: Esegui switch applicazione
+                }
+                _ => {
+                    // Altri tipi di eventi
+                }
+            }
+        }
+        
+        info!("✅ Esecuzione completata!");
+        
+        // Pausa tra ripetizioni
+        if iteration < ripeti {
+            info!("⏸️  Pausa 2 secondi prima della prossima ripetizione...");
+            tokio::time::sleep(Duration::from_secs(2)).await;
         }
     }
-    */
     
-    info!("⚠️  NOTA: Implementazione esecuzione in sviluppo");
-    info!("   Il workflow è stato caricato correttamente");
+    info!("");
+    info!("🎉 Tutte le {} ripetizioni completate!", ripeti);
+    info!("");
+    info!("⚠️  NOTA: Attualmente in modalità SIMULAZIONE");
+    info!("   Le azioni sono mostrate ma non eseguite realmente");
+    info!("   Versione completa in arrivo!");
     
     Ok(())
 }
