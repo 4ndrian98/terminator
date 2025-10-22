@@ -1,0 +1,35 @@
+[package]
+name = "workflow-automator-gui"
+version = "1.0.0"
+description = "Workflow Automator - Applicazione Desktop GUI"
+authors = ["Workflow Automator Team"]
+license = "MIT"
+repository = ""
+edition = "2021"
+
+[build-dependencies]
+tauri-build = { version = "1.5", features = [] }
+
+[dependencies]
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+tauri = { version = "1.8", features = ["shell-open"] }
+tokio = { version = "1.47", features = ["full"] }
+anyhow = "1.0"
+tracing = "0.1"
+tracing-subscriber = "0.3"
+
+# Workflow recorder dependencies
+terminator-rs = { path = "../terminator" }
+terminator-workflow-recorder = { path = "../terminator-workflow-recorder" }
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]
+
+[profile.release]
+panic = "abort"
+codegen-units = 1
+lto = true
+opt-level = "s"
+strip = true
