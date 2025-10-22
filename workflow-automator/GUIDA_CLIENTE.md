@@ -2,10 +2,17 @@
 
 ## 🎯 Cosa fa questo programma?
 
-**Workflow Automator** ti permette di automatizzare attività ripetitive sul computer:
-- Compilazione di form
-- Inserimento dati da Excel in programmi
-- Operazioni ripetitive che fai manualmente
+**Workflow Automator** è come un **"registratore universale"** per il tuo computer:
+
+1. **REGISTRA** qualsiasi cosa fai manualmente (click, digitazione, apertura programmi)
+2. **RIESEGUE** automaticamente quello che hai registrato, quando vuoi, quante volte vuoi
+
+**Funziona con QUALSIASI programma Windows!**
+- Gestionali aziendali
+- Browser web (form online)
+- Excel, Word, Outlook
+- Software personalizzati
+- Qualunque applicazione desktop
 
 **NESSUNA competenza tecnica richiesta!**
 
