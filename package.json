@@ -1,0 +1,15 @@
+{
+  "name": "workflow-automator-gui",
+  "version": "1.0.0",
+  "description": "Workflow Automator - Desktop GUI Application",
+  "scripts": {
+    "dev": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "tauri": "cargo tauri",
+    "tauri:dev": ". $HOME/.cargo/env && cd src-tauri && cargo tauri dev",
+    "tauri:build": ". $HOME/.cargo/env && cd src-tauri && cargo tauri build"
+  },
+  "keywords": ["automation", "workflow", "desktop", "tauri"],
+  "author": "Workflow Automator Team",
+  "license": "MIT"
+}
