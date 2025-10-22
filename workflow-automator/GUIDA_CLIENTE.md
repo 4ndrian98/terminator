@@ -69,7 +69,37 @@ Ora puoi ripetere il workflow salvato:
 workflow-automator.exe esegui --workflow mio_lavoro.json
 ```
 
-Il programma ripete AUTOMATICAMENTE tutte le azioni che hai registrato!
+**Il programma ripete AUTOMATICAMENTE tutte le azioni che hai registrato!**
+
+Il computer farà:
+- Click esattamente negli stessi punti
+- Digitare lo stesso testo
+- Aprire gli stessi programmi
+- Eseguire le stesse azioni
+
+**È come se fossi tu a farlo, ma in automatico!**
+
+---
+
+### Opzioni Avanzate
+
+**Ripetere più volte:**
+```cmd
+workflow-automator.exe esegui --workflow mio_lavoro.json --ripeti 10
+```
+Ripete il workflow 10 volte di seguito!
+
+**Rallentare (se va troppo veloce):**
+```cmd
+workflow-automator.exe esegui --workflow mio_lavoro.json --velocita 0.5
+```
+Esegue a metà velocità (utile per programmi lenti)
+
+**Velocizzare:**
+```cmd
+workflow-automator.exe esegui --workflow mio_lavoro.json --velocita 2.0
+```
+Esegue al doppio della velocità!
 
 ---
 
