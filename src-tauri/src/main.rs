@@ -218,6 +218,18 @@ async fn execute_workflow(
     info!("▶️  Esecuzione workflow: {} (ripetizioni: {}, velocità: {}x)", 
           workflow_name, repetitions, speed);
     
+    // VERIFICA LICENZA PRIMA DI ESEGUIRE
+    match load_license() {
+        Ok(license) => {
+            if !license.is_valid() {
+                return Err("Licenza scaduta. Inserisci una nuova chiave di licenza per continuare.".to_string());
+            }
+        }
+        Err(_) => {
+            return Err("Nessuna licenza attiva. Inserisci una chiave di licenza per usare questa funzionalità.".to_string());
+        }
+    }
+    
     // Carica il workflow
     let file_path = format!("workflows/{}.json", workflow_name);
     let workflow_data = std::fs::read_to_string(&file_path)
@@ -272,6 +284,47 @@ async fn execute_workflow(
     
     Ok(format!("Workflow '{}' eseguito {} volte a velocità {}x - {} eventi processati", 
                workflow_name, repetitions, speed, events.len()))
+}
+
+// ============================================================================
+// COMANDI TAURI - Gestione Licenze
+// ============================================================================
+
+#[tauri::command]
+async fn activate_license(license_key: String) -> Result<License, String> {
+    info!("🔑 Attivazione licenza: {}", license_key);
+    
+    let license = validate_license_key(&license_key)
+        .map_err(|e| e.to_string())?;
+    
+    if !license.is_valid() {
+        return Err("La licenza è già scaduta".to_string());
+    }
+    
+    save_license(&license)
+        .map_err(|e| format!("Errore salvataggio licenza: {}", e))?;
+    
+    info!("✅ Licenza attivata con successo");
+    Ok(license)
+}
+
+#[tauri::command]
+async fn get_license_status() -> Result<Option<License>, String> {
+    match load_license() {
+        Ok(license) => Ok(Some(license)),
+        Err(_) => Ok(None),
+    }
+}
+
+#[tauri::command]
+async fn deactivate_license() -> Result<String, String> {
+    info!("🗑️  Disattivazione licenza");
+    
+    remove_license()
+        .map_err(|e| e.to_string())?;
+    
+    info!("✅ Licenza rimossa");
+    Ok("Licenza disattivata".to_string())
 }
 
 // ============================================================================
