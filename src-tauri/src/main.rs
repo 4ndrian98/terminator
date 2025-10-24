@@ -12,6 +12,9 @@ use tauri::{Manager, State};
 use terminator_workflow_recorder::{WorkflowRecorder, WorkflowRecorderConfig};
 use tracing::{info, error};
 
+mod license;
+use license::{License, LicenseType, validate_license_key, save_license, load_license, remove_license};
+
 // State per il recorder
 struct RecorderState {
     recorder: Arc<Mutex<Option<WorkflowRecorder>>>,
