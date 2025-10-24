@@ -356,6 +356,9 @@ fn main() {
             get_workflow_info,
             delete_workflow,
             execute_workflow,
+            activate_license,
+            get_license_status,
+            deactivate_license,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
