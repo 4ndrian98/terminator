@@ -199,3 +199,11 @@ export async function deactivateLicense() {
  * @property {number} [duration_ms] - Durata in millisecondi
  * @property {number} event_count - Numero di eventi
  */
+
+/**
+ * @typedef {Object} License
+ * @property {string} license_key - Chiave di licenza
+ * @property {string} license_type - Tipo di licenza (Monthly, Quarterly, Annual)
+ * @property {string} expiration_date - Data scadenza (YYYYMMDD)
+ * @property {number} activated_at - Timestamp attivazione
+ */
