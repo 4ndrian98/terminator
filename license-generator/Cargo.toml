@@ -1,0 +1,10 @@
+[package]
+name = "license-generator"
+version = "1.0.0"
+edition = "2021"
+
+[dependencies]
+chrono = "0.4"
+sha2 = "0.10"
+hex = "0.4"
+anyhow = "1.0"
