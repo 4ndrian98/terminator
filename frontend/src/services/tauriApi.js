@@ -141,6 +141,53 @@ export async function executeWorkflow(workflowName, repetitions = 1, speed = 1.0
 }
 
 // ============================================================================
+// LICENSE API
+// ============================================================================
+
+/**
+ * Attiva una nuova licenza
+ * @param {string} licenseKey - Chiave di licenza
+ * @returns {Promise<License>}
+ */
+export async function activateLicense(licenseKey) {
+  try {
+    const result = await invoke('activate_license', { licenseKey });
+    return result;
+  } catch (error) {
+    console.error('Errore attivazione licenza:', error);
+    throw error;
+  }
+}
+
+/**
+ * Ottiene lo stato della licenza corrente
+ * @returns {Promise<License|null>}
+ */
+export async function getLicenseStatus() {
+  try {
+    const result = await invoke('get_license_status');
+    return result;
+  } catch (error) {
+    console.error('Errore caricamento stato licenza:', error);
+    throw error;
+  }
+}
+
+/**
+ * Disattiva la licenza corrente
+ * @returns {Promise<string>}
+ */
+export async function deactivateLicense() {
+  try {
+    const result = await invoke('deactivate_license');
+    return result;
+  } catch (error) {
+    console.error('Errore disattivazione licenza:', error);
+    throw error;
+  }
+}
+
+// ============================================================================
 // TYPES (JSDoc)
 // ============================================================================
 
