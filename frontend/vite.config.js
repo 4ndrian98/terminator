@@ -26,5 +26,8 @@ export default defineConfig({
     minify: !process.env.TAURI_DEBUG ? 'esbuild' : false,
     // Produce sourcemaps for debug builds
     sourcemap: !!process.env.TAURI_DEBUG,
+    rollupOptions: {
+      external: ['@tauri-apps/api/tauri'],
+    },
   },
 })
